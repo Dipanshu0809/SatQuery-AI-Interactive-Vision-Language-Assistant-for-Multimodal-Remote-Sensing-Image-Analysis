@@ -1,0 +1,126 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------
+   SatQuery AI design tokens
+   Visual language: spectral / instrumentation. Grounded in remote
+   sensing readouts (false-colour band composites, telemetry HUDs,
+   topographic contour lines) rather than generic SaaS gradients.
+------------------------------------------------------------------ */
+
+@theme {
+  --font-display: "Space Grotesk", "Segoe UI", sans-serif;
+  --font-body: "IBM Plex Sans", "Segoe UI", sans-serif;
+  --font-data: "IBM Plex Mono", ui-monospace, monospace;
+
+  /* Signature spectral accent (brand) */
+  --color-signal: #5eead4;
+  --color-signal-dim: #2d8f83;
+
+  /* Per-feature spectral palette — each tool gets its own identity */
+  --color-vegetation: #7ed957;   /* Image Analysis / land cover */
+  --color-water: #4fa8e0;        /* Ask SatQuery */
+  --color-thermal: #f0a857;      /* Change Detection */
+  --color-alert: #e2665a;        /* Errors / destructive */
+  --color-orbit: #a78bfa;        /* Satellite Map */
+  --color-violet: #c084fc;       /* Reports */
+  --color-amber: #fbbf24;        /* History */
+  --color-rose: #fb7185;         /* Settings / misc accents */
+}
+
+:root {
+  color-scheme: light;
+
+  --bg: #f7f8fa;
+  --bg-elevated: #ffffff;
+  --surface: #ffffff;
+  --surface-2: #eef1f4;
+  --border: #e1e5ea;
+  --border-strong: #c9d0d9;
+  --text: #131a22;
+  --text-muted: #5b6472;
+  --text-faint: #8993a3;
+  --accent: #0e8f84;
+  --accent-contrast: #ffffff;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg: #0a0e14;
+  --bg-elevated: #0d1219;
+  --surface: #121822;
+  --surface-2: #1a212c;
+  --border: #262e3a;
+  --border-strong: #364152;
+  --text: #e8edf4;
+  --text-muted: #8b98ac;
+  --text-faint: #5b6472;
+  --accent: #5eead4;
+  --accent-contrast: #06201d;
+}
+
+* {
+  border-color: var(--border);
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+::selection {
+  background: var(--color-signal);
+  color: #06201d;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* Mission-control micro-interactions */
+@keyframes satquery-scanline {
+  0% { transform: translateX(-120%); opacity: 0; }
+  15% { opacity: 0.8; }
+  50% { opacity: 0.35; }
+  85% { opacity: 0.8; }
+  100% { transform: translateX(120%); opacity: 0; }
+}
+
+.satquery-scanline {
+  position: relative;
+  overflow: hidden;
+}
+
+.satquery-scanline::after {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 28%;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--accent) 25%, transparent), transparent);
+  animation: satquery-scanline 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .satquery-scanline::after { animation: none; }
+}

@@ -1,0 +1,16 @@
+# Netlify build settings for the SatQuery AI frontend (React + Vite).
+# The FastAPI backend cannot run on Netlify; deploy it on Render and set
+# VITE_API_URL in Netlify's environment variables to the Render URL.
+[build]
+  base    = "frontend"
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# React Router: serve index.html for every route (e.g. /dashboard/mission)
+[[redirects]]
+  from   = "/*"
+  to     = "/index.html"
+  status = 200

@@ -1,0 +1,3 @@
+# Python dependencies for the SatQuery AI backend (FastAPI).
+# Install from the project root with:  pip install -r requirements.txt
+-r backend/requirements.txt
